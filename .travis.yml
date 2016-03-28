@@ -18,10 +18,10 @@ before_install:
 - |
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update
-      for pkg in `brew deps wine`; do
-        brew install --force-bottle $pkg
+      for pkg in `brew deps --skip-optional wine`; do
+        brew install --ignore-dependencies --force-bottle --$pkg
       done
-      brew install --force-bottle wine
+      brew install --ignore-dependencies --force-bottle wine
     fi
 after_success: npm run coveralls
 env:
