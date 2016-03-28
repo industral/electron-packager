@@ -14,7 +14,8 @@ addons:
   apt:
     packages:
     - wine
-before_install: if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update && brew install --force-bottle wine; fi
+before_install:
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update && (for pkg in `brew deps wine`; do brew install --force-bottle wine; done) && brew install --force-bottle wine; fi
 after_success: npm run coveralls
 env:
   global:
